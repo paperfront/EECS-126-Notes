@@ -2,7 +2,7 @@
 
 We now turn our attention to the methods to best utilize models, as well as how we can make models. \newline 
 
-The goal of a "model" is to define the transition probabilities between some state of nature (or hypothesis), and some observation that we see potentially resulting from the underlying state of nature. For example, given that it is cloudy (state of nature), what is the probability that it rains (observation)? Since we cannot entirely capture the inner workings of nature to determine the exact ways that a given set of clouds could cause rain, we do not know the exact underlying probability of rain given that it is cloudy. However, we can seek ways to approximate the workings of nature by approximating the underlying probability. Moreover, we would like a model to define all relevant transition probabilities (such as probability of sun given cloudy, rain given no clouds, rain given some clouds, etc.) We refer to the probability distribution of the state of nature as the \textbf{prior}, and we usually denote the probability distribution with the symbol \(\pi\). In our example, the prior would be the probability distribution of the different states of the sky. For example, we would have \(\pi(\textrm{cloudy}) = P(\textrm{cloudy})\), \(\pi(\textrm{sunny}) = P(\textrm{sunny})\), etc. \newline 
+The goal of a "model" is to define the transition probabilities between some state of nature (or hypothesis), and some observation that we see potentially resulting from the underlying state of nature. For example, given that it is cloudy (state of nature), what is the probability that it rains (observation)? Since we cannot entirely capture the inner workings of nature to determine the exact ways that a given set of clouds could cause rain, we do not know the exact underlying probability of rain given that it is cloudy. However, we can seek ways to approximate the workings of nature by approximating the underlying probability. Moreover, we would like a model to define all relevant transition probabilities (such as probability of sun given cloudy, rain given no clouds, rain given some clouds, etc.). Note that we will call these transition probabilities \textbf{likelihoods}, as they represent the likelihood of seeing some observation given an underlying state of nature. We refer to the probability distribution of the states of nature as the \textbf{prior}, and we usually denote this probability distribution with the symbol \(\pi\). In our example, the prior would be the probability distribution of the different states of the sky. For example, we would have \(\pi(\textrm{cloudy}) = P(\textrm{cloudy})\), \(\pi(\textrm{sunny}) = P(\textrm{sunny})\), etc. \newline 
 
 Note that our discussion has been using the phrase "state of nature", however it will be helpful to begin thinking of this as a "hypothesis" instead. The justification for this choice will be more clear after reading the coming sections. However, for now, whenever you see the phrase hypothesis, try thinking of it as a "state of nature" instead if that makes more intuitive sense.
 %TODO Insert diagram showing flow from state of nature -> model -> observation
@@ -23,12 +23,46 @@ Note that since our goal is to find \(x\in X\) that maximizes the expression, we
 This is called the \textbf{MAP Estimate}, and it is a function of the observation. MAP stands for \textbf{Maximum A Posteriori Probability}. A Posteriori Probability refers to the "after probability", meaning the 
 updated probability distribution of the hypothesis given we observe some piece of evidence. The above equation shows how we can think about MAP. Our goal is to maximize the A Posteriori Probability, and we reduced this problem into one that we can solve by utilizing the model. \newline 
 
+\begin{exmp}{Computing MAP}{}
+Assume that we have a coin that flips heads with probability \(1/4\). Your friend (or imaginary friend) flips the coin behind your back and tells you the result. Unfortunately, your friend is very nervous (perhaps they have a 5 page essay due in 2 hours yet they chose not to begin until the last minute because they were too busy watching youtube videos all day) and occasionally tells you the opposite of the true result with probability \(2/5\). Let \(y\) represent the result that your friend tells you such that \(y=0\) represents tails and \(y=1\) represents heads. Compute \(\MAP (y=0)\) and \(\MAP (y=1)\). \newline 
+
+We will begin with \(\MAP (y=0)\). We want to compute \(\underset{x\in X}{\argmax}\ p_{y|x}(y|x)\pi(x)\). We have: 
+\begin{align*}
+  &\MAP (y=0) = \\
+  &\underset{x\in X}{\argmax}\ 
+\begin{cases}
+	p_{y|x}(hear\ tails|true\ tails)\pi(true\ tails) = 3/5(3/4)=9/20:x=true \ tails \\
+	p_{y|x}(hear\ tails|true\ heads)\pi(true\ heads) = 2/5(1/4) = 2/20:x=true\ heads
+\end{cases} 
+\\
+&= true \ tails
+\end{align*}
+Similarly,
+\begin{align*}
+  &\MAP (y=1) = \\
+  &\underset{x\in X}{\argmax}\ 
+\begin{cases}
+	p_{y|x}(hear\ heads|true\ tails)\pi(true\ tails) = 2/5(3/4)=6/20:x=true \ tails \\
+	p_{y|x}(hear\ heads|true\ heads)\pi(true\ heads) = 3/5(1/4) = 3/20:x=true\ heads
+\end{cases} 
+\\
+&= true \ tails
+\end{align*}
+\newline 
+
+This means that no matter what our nervous friend tells us, we will guess that the hypothesis (the true result of the coin flip) was actually tails. This makes some intuitive sense, since we know that our friend gives inaccurate information almost half the time, and so our best bet is to just guess the outcome that was more likely to occur. Try repeating this example with some different probabilities if you want to see other results. 
+
+
+\end{exmp}
+
+
 We call MAP a type of \textbf{estimator}. In particular, MAP is useful when we know the prior (the probability distribution of the hypotheses). However, what if we do not have access to this distribution? One possible solution is to assume that the prior is uniform among (us) all hypotheses: i.e. \(\pi(x) = 1/|X|\). If we try to now compute the MAP estimate using this assumption, we will be able to treat \(\pi(x)\) as a constant (since it is the same for any \(x\)), and so we will be able to pull it out of the argmax expression entirely. We will get a different type of estimate called the \textbf{MLE} or \textbf{Maximum Likelihood Estimate}:
 \begin{equation*}
   \MLE (y) := \underset{x \in X}{\argmax}\ p_{y|x}(y|x)
 \end{equation*}
-This has a very nice interpretation: we will estimate the hypothesis by choosing the hypothesis that has greatest probability of producing the observed outcome, regardless of the prior distribution of the hypotheses.
+This has a very nice interpretation: we will estimate the hypothesis by choosing the hypothesis that has greatest probability of producing the observed outcome, regardless of the prior distribution of the hypotheses. Note that the term we noted earlier, \textit{likelihood}, is now coming into play. With MLE, we want to maximize the likelihood (transition probability between hypothesis and evidence), which is the same thing as our "model".
 
+\subsection{}
 
 
 
