@@ -1,0 +1,157 @@
+\section{Multiple Random Variables}
+\subsection{Joint Distributions and Independence}
+\begin{defn}{Joint PMF}{}
+Let \(X_1, X_2, \cdots X_n\) be n discrete random variables. The joint pmf of \(v\) is defined as:
+\begin{equation*}
+  P_{X_1, X_2, \cdots X_n}(X_1, X_2, \cdots X_n) = P(X_1 = x_1, X_2 = x_2, \cdots, X_n = x_n)
+\end{equation*}
+
+\end{defn}
+For continuous random variables, the joinf PDF can be defined similarly using integrals. The marginal PDF can be reconstructed by integrating out all other random variables from the joint PDF.
+\begin{defn}{Joint CDF}{}
+The joint CDF of n random variables \(X_1, X_2, \cdots X_n\) is defined as: 
+\begin{equation*}
+  F_{X_1, X_2, \cdots X_n}(X_1, X_2, \cdots X_n) = F(X_1 \leq x_1, X_2 \leq x_2, \cdots, X_n \leq x_n)
+\end{equation*}
+\end{defn}
+Earlier results regarding independence of 2 random variables still hold for n random variables. Namely, if a group of n random variables are independent, then their joint PDF is the same as the product of the marginal PDFs, the joint CDF is the product of the marginal CDFs, the joint PMF is the product of the marginal PMFs, and the expected value of the product of the random variables is the same as the product of the expected values. Moreover, the results regarding sums of independent random variables still hold, and so we can still make use of the equations we developed for expected value and variance.
+\subsection{Moment Generating Functions}
+\begin{defn}{Moments}{}
+We define the \(n\)th moment of a random variable \(X\) to be \(E[X^n]\).
+\end{defn}
+\begin{defn}{Moment Generating Function (MGF)}{}
+The moment generating function of a random variable \(X\) is defined to be the function \(M_X(s)\) where: \newline 
+\begin{equation*}
+  M_X(s) := E[e^{sX}]
+\end{equation*}
+The MGF of \(X\) exists if there exists a positive constant \(a\) such that \(M_X(s)\) is finite for all \(s \in [-a, a]\).
+\end{defn}
+The MGF is useful because it allows us to extract all the moments of \(X\) simply by taking derivatives (follows by considering the taylor series expansion of \(e^sX\)). Namely,
+\begin{equation*}
+  E[X^k] = \frac{d^k}{ds^k}M_x(s)|_{s=0} 
+\end{equation*}
+The MGF also uniquely defines the distribution of X. I.e. if two random variables \(X,Y\) have the same MGF, then they also have the same distribution.
+
+
+\begin{thm}{}{}
+If \(X_1, X_2, \cdots, X_n\) are \(n\) independent random variables, then: \newline 
+\begin{equation*}
+  M_{X_1, X_2, \cdots, X_n}(s) = M_{X_1}(s)M_{X_2}(s)\cdots M_{X_n}(s)
+\end{equation*}
+\end{thm}
+
+\begin{exmp}{}{}
+Let \(X \sim Binomial(n, p).\) Find the MGF of \(X\).\newline 
+Since \(X\) is binomial, we can think of it as the sum of \(n\) independent Bernoulli random variables:
+\begin{equation*}
+  X = X_1 + X_2 + \cdots + X_n
+\end{equation*}
+Since the \(X_i\) are i.i.d., we know that \(M_{X}(s) = M_{X_1}(s)M_{X_2}(s)\cdots M_{X_n}(s)\). \newline 
+\begin{equation*}
+  M_{X_i}(s) = E[e^{sX_i}] = p(e^{s}) + (1-p)(e^{0}) = (1-p) + pe^s
+\end{equation*}
+Thus,
+\begin{equation*}
+  M_X(s) = (1 - p + pe^s)^n
+\end{equation*}
+
+\end{exmp}
+
+\begin{exmp}{}{}
+Use MGFs to prove that if \(X \sim Binomial(m,p)\) and \(Y \sim Binomial(n,p)\) are independent, then \(X + Y \sim Binomial(m + n, p)\).\newline 
+
+Solution: The MGF of \(X + Y\) is:
+\begin{equation*}
+  M_X(s)M_Y(s) = (1 - p + pe^s)^m \cdot (1 - p + pe^s)^n = (1 - p + pe^s)^{m + n}
+\end{equation*}
+Which is the MGF of \(Z \sim Binomial(m + n, p)\).
+
+\end{exmp}
+
+\subsection{Characteristic Functions}
+To be filled in.
+
+\subsection{Exercises Part 1}
+\begin{exmp}{}{}
+Let \(X,Y,Z\) be three independent random variables with \(X \sim N(\mu,\sigma^2)\), and \(Y,Z\sim Uniform(0,2)\). We also know that:
+\begin{itemize}
+  \item \(E[X^2Y + XYZ] = 13\)
+  \item \(E[XY^2 + ZX^2] = 14\)
+\end{itemize}
+Find \(\mu\) and \(\sigma\).\newline 
+
+Solution: From equation 1, we get that \(E[X^2] = 13 - \mu\). From equation 2, we get that \(E[Y^2] = \frac{14 - E[X^2]}{\mu} = \frac{1 + \mu}{\mu}\). We also know that \(Var(Y) = Var(Z) = \frac{1}{3}\). Thus, \(E[Y^2] = 1 + \frac{1}{3} = \frac{4}{3}\). This gives \(\mu = 3\). Finally, \(Var(X) = \sigma^2 = 13 - \mu - \mu^2 = 1\).
+
+\end{exmp}
+
+\begin{exmp}{}{}
+Let \(X_1,X_2,X_3\) be 3 i.i.d. \(Bernoulli(p)\) random variables and:
+\begin{itemize}
+  \item \(Y_1 = \max(X_1,X_2)\)
+  \item \(Y_2 = \max(X_1,X_3)\)
+  \item \(Y_3 = \max(X_2,X_3)\)
+  \item \(Y = Y_1 + Y_2 + Y_3\)
+\end{itemize}
+Find \(E[Y]\).\newline 
+
+Solution: \(E[Y] = 3E[Y_1]\). \(E[Y_1] = (1 - (1-p)^2) = p(2 - p)\). Thus, \(E[Y] = 3p(2-p)\).
+
+\end{exmp}
+
+\subsection{Markov and Chebyshev Inequalities}
+\begin{thm}{Markov's Inequality}{}
+If \(X\) is a nonnegative random variable, then for any \(a > 0\):
+\begin{equation*}
+  P(X \geq a) \leq \frac{E[X]}{a}
+\end{equation*}
+
+
+\end{thm}
+
+\begin{thm}{Chebyshev's Inequality}{}
+If \(X\) is any random variable, then for any \(b > 0\) we have: 
+\begin{equation*}
+  P(|X - E[X]| \geq b) \leq \frac{Var(X)}{b^2}
+\end{equation*}
+
+\end{thm}
+
+\begin{thm}{}{}
+If \(X\) is a random variable, then for any \(a \in \R\) we have:
+\begin{itemize}
+  \item \(P(X \geq a) \leq e^{-sa}M_X(s)\), for all \(s > 0\)
+  \item \(P(X \leq a) \leq e^{-sa}M_X(s)\), for all \(s < 0\)
+\end{itemize}
+\begin{proof}
+We start by seeing that:
+\begin{itemize}
+  \item \(P(X \geq a) = P(e^{sX} \geq e^{sa})\), for all \(s > 0\)
+  \item \(P(X \leq a) = P(e^{sX} \geq e^{sa})\), for all \(s < 0\)
+\end{itemize}
+For \(s > 0\), we can use Markov's inequality to write:
+\begin{equation*}
+  P(e^{sX} \geq e^{sa}) \leq \frac{E[e^{sX}]}{e^{sa}} = e^{-sa}M_X(s)
+\end{equation*}
+A similar result follows for \(s < 0\).
+
+\end{proof}
+This bound is useful because it depends on a new parameter: \(s\). That is to say, we can optimize over s to find the tightest bound.
+
+
+\end{thm}
+
+\begin{thm}{Cauchy-Schwarz Inequality}{}
+For any two random variables \(X\) and \(Y\), we have:
+\begin{equation*}
+  |E[XY]| \leq \sqrt{E[X^2]E[Y^2]}
+\end{equation*}
+Where equality holds if and only if \(X = \alpha Y\) for some constant \(\alpha \in \R\).
+
+\end{thm}
+
+
+
+
+
+
+

@@ -1,0 +1,93 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+% See geometry.pdf to learn the layout options. There are lots.		% ... or a4paper or a5paper or ...
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex
+\usepackage{amssymb}
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage{lipsum}
+\usepackage{amsmath} % provides many mathematical environments & tools
+\usepackage{amsthm}
+
+%SetFonts
+
+%SetFonts
+
+
+% Definitions
+\newcommand{\N}{{\mathbb N}}
+\newcommand{\Q}{{\mathbb Q}}
+\newcommand{\R}{{\mathbb R}}
+\newcommand{\tod}{{\xrightarrow{d}}}
+\newcommand{\topr}{{\xrightarrow{p}}}
+\newcommand{\toas}{{\xrightarrow{a.s.}}}
+\newcommand{\limtoinf}{{\lim_{n \to \infty}}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+%Probability Definitions
+\newcommand{\Bern}[2]{#1 \sim \text{Bernoulli}\left( #2 \right)}
+\newcommand{\Bin}[3]{#1 \sim \text{Binomial}\left( #2, #3 \right)}
+\newcommand{\Geo}[2]{#1 \sim \text{Geometric}\left( #2 \right)}
+
+\newcommand{\PoisX}[2]{\dfrac{{#1}^{#2}}{#2 !} e^{- {#1}}}
+\newcommand{\DPois}[2]{#1 \sim \Pois{#2}}
+\newcommand{\Pois}[1]{\text{Poisson}\left( #1 \right)}
+\newcommand{\Uniform}[3]{#1 \sim \text{Uniform}\left( #2, #3 \right)}
+\newcommand{\Expo}[1]{\text{Exponential}\left( #1 \right)}
+\newcommand{\DExpo}[2]{#1 \sim \Expo{ #2 }}
+\newcommand{\Normal}[3]{#1 \sim \mathcal{N}\left( #2, #3 \right)}
+\newcommand{\StdNormal}[1]{#1 \sim \mathcal{N}\left( 0, 1 \right)}
+
+\newcommand{\varseqn}[2]{#1_1, #1_2, \cdots, #1_{#2}}
+\newcommand{\varseq}[1]{#1_1, #1_2, \cdots}
+
+\newcommand{\MAP}{{\hat{X}_{MAP}}}
+
+\newcommand{\MLE}{{\hat{X}_{MLE}}}
+
+
+\usepackage[left=3cm,right=3cm,top=2cm,bottom=2cm]{geometry} % page settings
+
+
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems}
+
+\setlength{\parindent}{0mm}
+\setcounter{tocdepth}{2}
+
+%Definitions and Theorems
+\theoremstyle{definition}
+\newtcbtheorem[number within=section]{defn}{Definition}%
+{colback=green!5,colframe=green!35!black,fonttitle=\bfseries}{defn}
+
+\newtcbtheorem[number within=section]{thm}{Theorem}%
+{colback=purple!5,colframe=purple!35!black,fonttitle=\bfseries}{thm}
+
+\newtcbtheorem[number within=section]{exmp}{Example}%
+{colback=orange!5,colframe=orange!35!black,fonttitle=\bfseries}{exmp}
+
+\begin{document}
+
+\title{EECS 126 Notes}
+\author{Matthew Lacayo}
+\date{\today}
+\maketitle
+These notes will follow along with the teachings of the book Introduction to Probability, Statistics, and Random Processes by Hossein Pishro-Nik. Additional notes will also be included that follow along with the lecture teaching of professor Tom Courtade from Spring 2021.
+\tableofcontents
+
+\newpage
+\include{multiple_random_variables}
+
+\newpage 
+\include{limit_theorems}
+
+\newpage 
+\include{random_processes}
+
+\newpage 
+\include{hypothesis_testing}
+
+\end{document}

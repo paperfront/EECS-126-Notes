@@ -1,0 +1,122 @@
+\section{Limit Theorems and Convergence of Random Variables}
+\subsection{Limit Theorems}
+\begin{defn}{Sample Mean}{}
+For i.i.d. random variables \(X_1, X_2, \cdots, X_n\), the \textbf{sample mean}, denoted by \(\overline{X}\) or \(M_n\), is defined as:
+\begin{equation*}
+  \overline{X} := \frac{X_1 + X_2 + \cdots + X_n}{n}
+\end{equation*}
+Note that since each \(X_i\) is a random variable, the sample mean is also a random variable. It can easily be shown that:
+\begin{itemize}
+  \item \(E[\overline{X}] = E[X_i]\)
+  \item \(Var(\overline{X}) = \frac{Var(X)}{n}\)
+\end{itemize}
+
+\end{defn}
+
+\begin{thm}{Weak Law of Large Numbers (WLLN)}{}
+Let \(X_1, X_2, \cdots, X_n\) be i.i.d. random variables with a finite expected value \(E[X_i] = \mu < \infty\). Then, for any \(\epsilon > 0\) we have:
+\begin{equation*}
+  \lim_{n \to \infty}P(|\overline{X} - \mu | \geq \epsilon) = 0
+\end{equation*}
+We can easily prove this if we make the assumption that the variance is finite, as we can then use chebyshevs inequality and show that the term on the right of the inequality goes to zero as n goes to infinity.
+\end{thm}
+\begin{defn}{Normalized Variable}{}
+Suppose \(X_1,X_2,\cdots,X_n\) are i.i.d. random variables with \(E[X_i] = \mu < \infty\) and \(Var(X_i) = \sigma^2 < \infty\). We define the normalized random variable \(Z_n\) as:
+\begin{equation*}
+  Z_n = \frac{\overline{X} - E[\overline{X}]}{\frac{\sigma}{\sqrt{n}}} = \frac{X_1 + X_2 + \cdots + X_n - n\mu }{\sqrt{n}\sigma}
+\end{equation*}
+Also, note that \(E[Z_n] = 0\) and \(Var(Z_n) = 1\).
+\end{defn}
+\begin{thm}{The Central Limit Theorem (CLT)}{}
+Let \(X_1,X_2,\cdots,X_n\) be i.i.d. random variables with \(E[X_i] = \mu < \infty\) and \(Var(X_i) = \sigma^2 < \infty\). Then, \(Z_n\) converges in distribution to the standard normal random variable as n goes to infinity. That is, for all \(x \in \R\):
+\begin{equation*}
+  \lim_{n\to\infty} P(Z_n \leq x) = \Phi(x)
+\end{equation*}
+Where \(\Phi(x)\) is the standard normal CDF.
+
+\end{thm}
+\begin{exmp}{}{}
+In a communication system, each data packet consists of 1000 bits. Due to the noise, each bit may be received in error with probability 0.1. It is assumed bit errors occur independently. Find the probability that there are more than 120 errors in a certain data packet. \newline 
+
+Solution: Let \(Y = X_1 + X_2 + \cdots + X_1000\) where each \(X_i \sim Bernoulli(0.1)\). Thus, \(E[X_i] = 0.1\) and \(Var(X_i) = 0.09\). We want to find \(P(Y \leq 120)\). 
+\begin{equation*}
+  P(Y \leq 120) 
+  = P(\frac{Y - n\mu}{\sigma \sqrt{n}} \leq \frac{120 - \mu}{\sigma \sqrt{n}}) 
+  = P(Z_n \leq \frac{120 - 100}{\sqrt{0.09} \sqrt{1000}})
+  \approx \Phi(\frac{20}{\sqrt{90}})
+\end{equation*}
+Finally, \(1 - \Phi(\frac{20}{\sqrt{90}}) = 0.0175\)
+
+\end{exmp}
+
+\subsection{Convergence of Random Variables}
+\begin{defn}{Convergence in Distribution}{}
+A sequence of random variables \(X_1, X_2, X_3, \cdots\) converges \textbf{in distribution} to a random variable \(X\), denoted as \(X_n \xrightarrow{d} X\), if:
+\begin{equation*}
+  \lim_{n \to \infty}F_{X_n}(x) = F_X(x)
+\end{equation*}
+for all \(x\) at which \(F_X(x)\) is continuous.
+
+\end{defn}
+\begin{exmp}{}{}
+Let \(X_2, X_3, X_4, \cdots\) be a sequence of random variables such that:
+\begin{equation*}
+  F_{X_n}(x) = 
+  \left.
+  \begin{cases}
+    1 - (1 - \frac{1}{n})^{nx}, & \text{for } x > 0 \\
+    0, & \text{otherwise } 
+  \end{cases}
+  \right\}
+\end{equation*}
+Show that \(X_n \tod Expo(1)\).\newline 
+
+Solution: 
+\begin{equation*}
+  \lim_{n\to\infty}1 - (1 - \frac{1}{n})^{nx} = 1 - e^{-x}
+\end{equation*}
+This is the CDF of \(Expo(1)\) as desired.
+\end{exmp}
+\begin{defn}{Convergence in Probability}{}
+A sequence of random variables \(X_1, X_2, X_3, \cdots\) converges \textbf{in probability} to a random variable \(X\), denoted as \(X_n \topr X\), if for all \(\epsilon > 0\):
+\begin{equation*}
+  \lim_{n \to \infty}P(|X_n - X| \geq \epsilon) = 0
+\end{equation*}
+
+\end{defn}
+
+\begin{exmp}{}{}
+Let \(X_n \sim Expo(n)\). Show that \(X_n \topr 0\) i.e. to the random variable that is always 0. \newline 
+
+Solution:
+\begin{equation*}
+  \lim_{n \to \infty} P(|X_n| > \epsilon) =|e^{-n\epsilon}| = 0
+\end{equation*}
+as desired.
+
+\end{exmp}
+
+\begin{exmp}{}{}
+Reread the WLLN. This is an example of convergence in probability.
+\end{exmp}
+
+\begin{thm}{Almost Sure Convergence}{}
+A sequence of random variables \(X_1, X_2, X_3, \cdots\) converges \textbf{almost surely} to a random variable \(X\), denoted as \(X_n \toas X\), if:
+\begin{equation*}
+  P(\{s \in S : \limtoinf X_n(s) = X(s)\}) = 1
+\end{equation*}
+This is saying that the set of samples for which \(X_n = X\) forms an event of probability 1 as n goes to infinity.
+\end{thm}
+\begin{thm}{Strong Law of Large Numbers}{}
+Let \(X_1,X_2,\cdots,X_n\) be i.i.d. random variables with \(E[X_i] = \mu < \infty\). Let also:
+\begin{equation*}
+  M_n := \frac{X_1 + X_2 + \cdots + X_n}{n}
+\end{equation*}
+Then \(M_n \toas \mu\).
+\end{thm}
+
+
+
+
+
+

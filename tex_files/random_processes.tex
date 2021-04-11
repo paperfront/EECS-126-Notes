@@ -1,0 +1,69 @@
+\section{Random Processes}
+\subsection{Poisson Processes}
+\begin{defn}{Counting Process}{}
+A random process \(\{N(t), t\in[0, \infty)\}\) is said to be a \textbf{counting process} if \(N(t)\) is the number of events occurred from time 0 up to and including time \(t\). For a counting process, we assume: 
+\begin{itemize}
+  \item \(N(0) = 0\)
+  \item \(N(t) \in \{0, 1, 2, \cdots\}\), for all \(t \in [0, \infty)\)
+  \item For \(0 \leq s < t\), \(N(t) - N(s)\) shows the number of events that occur in the interval \((s, t]\)
+\end{itemize}
+We typically refer to the occurrence of an event as an 'arrival'.
+\end{defn}
+\begin{defn}{Poisson Process}{}
+Let \(\lambda > 0\) be fixed. The counting process \(\{N(t), t \in [0, \infty)\}\) is called a \textbf{Poisson Process} with rate \(\lambda\) if all the following conditions hold:
+\begin{itemize}
+  \item \(N(0) = 0\)
+  \item \(N(t)\) has independent increments (disjoint intervals are independent)
+  \item The number of arrivals in any interval of length \(\tau > 0\) has \(Poisson(\lambda \tau\)) distribution.
+\end{itemize}
+Note that the number of arrivals in any given interval depends only on the length of the interval, not on the location of the interval. 
+\end{defn}
+\begin{exmp}{}{}
+The number of customers arriving at a grocery store can be modeled by a Poisson process with intensity \(\lambda = 10\) customers per hour. Find the probability that there are 2 customers between 10:00 and 10:20. \newline 
+
+Solution: We know that the length of the interval \(\tau = \frac{20}{60} = \frac{1}{3}\). Thus, the distribution of arrivals in the 20 minute interval is \(X \sim Poisson(10 \cdot \frac{1}{3} = \frac{10}{3})\). Finally, 
+\begin{equation*}
+  P(X=2) = \frac{e^{-\frac{10}{3}}(\frac{10}{3})^2}{2!} \approx 0.2
+\end{equation*}
+\end{exmp}
+Now, let us consider arrival and interarrival times for a Poisson process. 
+\begin{exmp}{}{}
+Let \(N(t)\) be a Poisson process with rate \(\lambda\). Let \(X_1\) be the time of the first arrival. Then,
+\begin{align*}
+  P(X_1 > t) &= P(\textrm{no arrival in \((0,t]\)})\\
+  &= \PoisX{(\lambda t)}{0}\\
+  &= e^{-\lambda t}
+\end{align*}
+Thus,
+\begin{equation*}
+  F_{X_1}(t) = 1 - e^{-\lambda t}
+\end{equation*}
+This is the CDF of \(\Expo{\lambda}\), and so \(\DExpo{X_1}{\lambda}\). \newline 
+
+Let \(X_2\) be the time elapsed between the first and the second arrival. Since the probability of an arrival in disjoint intervals is independent, we also have that \(\DExpo{X_2}{\lambda}\). This yields the following definition.
+
+\end{exmp}
+\begin{defn}{Interarrival Times for Poisson Processes}{}
+If \(N(t)\) is a Poisson process with rate \( \lambda \), then the interarrival times \( \varseq{X} \) are independent and for \(i = 1, 2, 3, \cdots \):
+\begin{equation*}
+  \DExpo{X_i}{\lambda}
+\end{equation*}
+
+\end{defn}
+
+\begin{defn}{Arrival Times for Poisson Processes}{}
+If \(N(t)\) is a Poisson process with rate \( \lambda \), then the arrival times \(\varseq{T}\) have \(Erlang(n, \lambda)\) distribution. I.e.
+\begin{equation*}
+  T_i = X_1 + X_2 + \cdots + X_i
+\end{equation*}
+Thus,
+\begin{itemize}
+  \item \(E[T_i] = \frac{n}{\lambda}\)
+  \item \(Var(T_i) = \frac{n}{\lambda^2}\)
+\end{itemize}
+
+
+\end{defn}
+
+Now, we will discuss merging and splitting Poisson processes. That is, we will consider taking two independent Poisson processes and adding them together, or taking one poisson process and splitting its arrivals into multiple 'streams' according to some defined distribution.
+
