@@ -1,0 +1,35 @@
+\section{Hypothesis Testing}
+
+We now turn our attention to the methods to best utilize models, as well as how we can make models. \newline 
+
+The goal of a "model" is to define the transition probabilities between some state of nature (or hypothesis), and some observation that we see potentially resulting from the underlying state of nature. For example, given that it is cloudy (state of nature), what is the probability that it rains (observation)? Since we cannot entirely capture the inner workings of nature to determine the exact ways that a given set of clouds could cause rain, we do not know the exact underlying probability of rain given that it is cloudy. However, we can seek ways to approximate the workings of nature by approximating the underlying probability. Moreover, we would like a model to define all relevant transition probabilities (such as probability of sun given cloudy, rain given no clouds, rain given some clouds, etc.) We refer to the probability distribution of the state of nature as the \textbf{prior}, and we usually denote the probability distribution with the symbol \(\pi\). In our example, the prior would be the probability distribution of the different states of the sky. For example, we would have \(\pi(\textrm{cloudy}) = P(\textrm{cloudy})\), \(\pi(\textrm{sunny}) = P(\textrm{sunny})\), etc. \newline 
+
+Note that our discussion has been using the phrase "state of nature", however it will be helpful to begin thinking of this as a "hypothesis" instead. The justification for this choice will be more clear after reading the coming sections. However, for now, whenever you see the phrase hypothesis, try thinking of it as a "state of nature" instead if that makes more intuitive sense.
+%TODO Insert diagram showing flow from state of nature -> model -> observation
+
+\subsection{MAP and MLE}
+Say that we are given some observation, and we would like to know under what conditions would the likelihood of observing this outcome be maximized. In other words, after seeing some evidence, we now want to know which hypothesis we believe is the most likely candidate for producing the evidence. This could be helpful if we are not able to observe the inner working of a system and are only able to observe some output of that system, but we still want to be able to make some predictions about what is going on behind the scenes. Let us now formalize our goal. Assume that the possible hypotheses lie in a set \(X\), and the possible observations lie in a set \(Y\). Given some observation \(y \in Y\), we want to find:
+\begin{equation*}
+  \underset{x \in X}{\argmax}\ p_{x|y}(x|y)
+\end{equation*}
+How can we interpret these probabilities? We know that \(\pi(x)\) is the \textit{prior} of \(x\), and it represents the probability of the hypothesis being \(x\) (no evidence observed). We can also interpret \(p_{x|y}(x|y)\) as being our updated belief about the probability of the hypothesis being \(x\) now that we have observed an observation \(y\). In other words, observing \(y\) gave us new information, and so we now want to update our beliefs on the hypotheses based on this information. Using this way of thinking is critical to understanding the utility of Bayes Law. Remember that the model gives us access to the transition probabilities between the hypotheses and the states of nature: \(p_{y|x}(y|x)\), and we know that we can relate this to \(p_{x|y}(x|y)\) given Bayes Law, and so we can can convert our goal into the following:
+\begin{equation*}
+  \underset{x\in X}{\argmax}\ p_{x|y}(x|y) = \underset{x \in X}{\argmax}\ \frac{p_{y|x}(y|x)p(x)}{p(y)} = \underset{x\in X}{\argmax}\  \frac{p_{y|x}(y|x)\pi(x)}{p(y)}
+\end{equation*}
+Note that since our goal is to find \(x\in X\) that maximizes the expression, we can ignore the denominator. This is because the denominator depends only on \(y\), and so maximizing the entire expression amounts to maximizing what we can control, which in this case is just the numerator. Therefore, to find our guess for which hypothesis caused the evidence that we saw, we define:
+\begin{equation*}
+  \MAP (y) := \underbrace{\underset{x \in X}{\argmax}\ p_{x|y}(x|y)}_{"A\ Posteriori \ Probability"} = \underbrace{\underset{x\in X}{\argmax}\ p_{y|x}(y|x)\pi(x)}_{Computable \ with \ model}
+\end{equation*}
+This is called the \textbf{MAP Estimate}, and it is a function of the observation. MAP stands for \textbf{Maximum A Posteriori Probability}. A Posteriori Probability refers to the "after probability", meaning the 
+updated probability distribution of the hypothesis given we observe some piece of evidence. The above equation shows how we can think about MAP. Our goal is to maximize the A Posteriori Probability, and we reduced this problem into one that we can solve by utilizing the model. \newline 
+
+We call MAP a type of \textbf{estimator}. In particular, MAP is useful when we know the prior (the probability distribution of the hypotheses). However, what if we do not have access to this distribution? One possible solution is to assume that the prior is uniform among (us) all hypotheses: i.e. \(\pi(x) = 1/|X|\). If we try to now compute the MAP estimate using this assumption, we will be able to treat \(\pi(x)\) as a constant (since it is the same for any \(x\)), and so we will be able to pull it out of the argmax expression entirely. We will get a different type of estimate called the \textbf{MLE} or \textbf{Maximum Likelihood Estimate}:
+\begin{equation*}
+  \MLE (y) := \underset{x \in X}{\argmax}\ p_{y|x}(y|x)
+\end{equation*}
+This has a very nice interpretation: we will estimate the hypothesis by choosing the hypothesis that has greatest probability of producing the observed outcome, regardless of the prior distribution of the hypotheses.
+
+
+
+
+
