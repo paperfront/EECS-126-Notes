@@ -2,7 +2,8 @@
 % See geometry.pdf to learn the layout options. There are lots.		% ... or a4paper or a5paper or ...
 %\geometry{landscape}                		% Activate for rotated page geometry
 %\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
-\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+\usepackage{graphicx}
+\graphicspath{ {./diagrams/} }			% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
 								% TeX will automatically convert eps --> pdf in pdflatex
 \usepackage{amssymb}
 \usepackage{titlesec}
@@ -10,6 +11,7 @@
 \usepackage{lipsum}
 \usepackage{amsmath} % provides many mathematical environments & tools
 \usepackage{amsthm}
+\usepackage{smartdiagram}
 
 %SetFonts
 
@@ -28,10 +30,13 @@
 \DeclareMathOperator*{\argmin}{arg\,min}
 
 %Probability Definitions
-\newcommand{\Bern}[2]{#1 \sim \text{Bernoulli}\left( #2 \right)}
+
 \newcommand{\Bin}[3]{#1 \sim \text{Binomial}\left( #2, #3 \right)}
 \newcommand{\Geo}[2]{#1 \sim \text{Geometric}\left( #2 \right)}
 
+
+\newcommand{\DBern}[2]{#1 \sim \text{Bernoulli}\left( #2 \right)}
+\newcommand{\Bern}[1]{\text{Bernoulli}\left( #1 \right)}
 \newcommand{\PoisX}[2]{\dfrac{{#1}^{#2}}{#2 !} e^{- {#1}}}
 \newcommand{\DPois}[2]{#1 \sim \Pois{#2}}
 \newcommand{\Pois}[1]{\text{Poisson}\left( #1 \right)}
